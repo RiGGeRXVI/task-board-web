@@ -1,1 +1,90 @@
-<h1>Task Board</h1><p>Приложение запущено</p>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Доска задач</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="page-header">
+        <div class="container">
+            <h1>Доска задач</h1>
+            <p class="subtitle">Учебное веб-приложение для управления задачами</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="task-form-section">
+            <h2>Добавить задачу</h2>
+
+            <form class="task-form" action="{{ url_for('add_task') }}" method="post">
+                <div class="form-group">
+                    <label for="title">Название задачи</label>
+                    <input type="text" id="title" name="title" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Описание</label>
+                    <textarea id="description" name="description" rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="status">Статус</label>
+                    <select id="status" name="status">
+                        <option value="todo">К выполнению</option>
+                        <option value="in_progress">В работе</option>
+                        <option value="done">Готово</option>
+                    </select>
+                </div>
+
+                <button class="add-task-btn" type="submit">Добавить</button>
+            </form>
+        </section>
+
+        <section class="board">
+            <section class="column">
+                <div class="column-header">
+                    <h2>К выполнению</h2>
+                    <span class="task-count">{{ todo_tasks|length }}</span>
+                </div>
+
+                {% for task in todo_tasks %}
+                <article class="task-card">
+                    <h3>{{ task.title }}</h3>
+                    <p>{{ task.description }}</p>
+                </article>
+                {% endfor %}
+            </section>
+
+            <section class="column">
+                <div class="column-header">
+                    <h2>В работе</h2>
+                    <span class="task-count">{{ in_progress_tasks|length }}</span>
+                </div>
+
+                {% for task in in_progress_tasks %}
+                <article class="task-card">
+                    <h3>{{ task.title }}</h3>
+                    <p>{{ task.description }}</p>
+                </article>
+                {% endfor %}
+            </section>
+
+            <section class="column">
+                <div class="column-header">
+                    <h2>Готово</h2>
+                    <span class="task-count">{{ done_tasks|length }}</span>
+                </div>
+
+                {% for task in done_tasks %}
+                <article class="task-card">
+                    <h3>{{ task.title }}</h3>
+                    <p>{{ task.description }}</p>
+                </article>
+                {% endfor %}
+            </section>
+        </section>
+    </main>
+</body>
+</html>
