@@ -18,7 +18,7 @@
         <section class="task-form-section">
             <h2>Добавить задачу</h2>
 
-            <form class="task-form" action="{{ url_for('add_task') }}" method="post">
+            <form class="task-form" action="{{ url_for('main.add_task') }}" method="post">
                 <div class="form-group">
                     <label for="title">Название задачи</label>
                     <input type="text" id="title" name="title" required>
@@ -55,9 +55,9 @@
                         <h3>{{ task.title }}</h3>
 
                         <div class="task-actions">
-                            <a class="edit-btn" href="{{ url_for('edit_task', id=task.id) }}">Редактировать</a>
+                            <a class="edit-btn" href="{{ url_for('main.edit_task', id=task.id) }}">Редактировать</a>
 
-                            <form action="{{ url_for('delete_task', id=task.id) }}" method="post">
+                            <form action="{{ url_for('main.delete_task', id=task.id) }}" method="post">
                                 <button class="delete-btn" type="submit" onclick="return confirm('Удалить задачу?')">
                                     Удалить
                                 </button>
@@ -83,9 +83,9 @@
                         <h3>{{ task.title }}</h3>
 
                         <div class="task-actions">
-                            <a class="edit-btn" href="{{ url_for('edit_task', id=task.id) }}">Редактировать</a>
+                            <a class="edit-btn" href="{{ url_for('main.edit_task', id=task.id) }}">Редактировать</a>
 
-                            <form action="{{ url_for('delete_task', id=task.id) }}" method="post">
+                            <form action="{{ url_for('main.delete_task', id=task.id) }}" method="post">
                                 <button class="delete-btn" type="submit" onclick="return confirm('Удалить задачу?')">
                                     Удалить
                                 </button>
@@ -110,9 +110,9 @@
                         <h3>{{ task.title }}</h3>
 
                         <div class="task-actions">
-                            <a class="edit-btn" href="{{ url_for('edit_task', id=task.id) }}">Редактировать</a>
+                            <a class="edit-btn" href="{{ url_for('main.edit_task', id=task.id) }}">Редактировать</a>
 
-                            <form action="{{ url_for('delete_task', id=task.id) }}" method="post">
+                            <form action="{{ url_for('main.delete_task', id=task.id) }}" method="post">
                                 <button class="delete-btn" type="submit" onclick="return confirm('Удалить задачу?')">
                                     Удалить
                                 </button>

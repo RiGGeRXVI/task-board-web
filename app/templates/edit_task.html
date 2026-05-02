@@ -18,7 +18,7 @@
         <section class="task-form-section">
             <h2>Изменить задачу</h2>
 
-            <form class="task-form" action="{{ url_for('edit_task', id=task.id) }}" method="post">
+            <form class="task-form" action="{{ url_for('main.edit_task', id=task.id) }}" method="post">
                 <div class="form-group">
                     <label for="title">Название задачи</label>
                     <input type="text" id="title" name="title" value="{{ task.title }}" required>
@@ -40,7 +40,7 @@
 
                 <div class="form-actions">
                     <button class="add-task-btn" type="submit">Сохранить изменения</button>
-                    <a class="back-btn" href="{{ url_for('index') }}">Назад</a>
+                    <a class="back-btn" href="{{ url_for('main.index') }}">Назад</a>
                 </div>
             </form>
         </section>
