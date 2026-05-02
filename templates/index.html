@@ -51,7 +51,15 @@
 
                 {% for task in todo_tasks %}
                 <article class="task-card">
-                    <h3>{{ task.title }}</h3>
+                    <div class="task-card-top">
+                        <h3>{{ task.title }}</h3>
+
+                        <form action="{{ url_for('delete_task', id=task.id) }}" method="post">
+                            <button class="delete-btn" type="submit" onclick="return confirm('Удалить задачу?')">
+                                Удалить
+                            </button>
+                        </form>
+                    </div>
                     <p>{{ task.description }}</p>
                 </article>
                 {% endfor %}
@@ -65,7 +73,16 @@
 
                 {% for task in in_progress_tasks %}
                 <article class="task-card">
-                    <h3>{{ task.title }}</h3>
+                    <div class="task-card-top">
+                        <h3>{{ task.title }}</h3>
+
+                        <form action="{{ url_for('delete_task', id=task.id) }}" method="post">
+                            <button class="delete-btn" type="submit" onclick="return confirm('Удалить задачу?')">
+                                Удалить
+                            </button>
+                        </form>
+                    </div>
+
                     <p>{{ task.description }}</p>
                 </article>
                 {% endfor %}
@@ -79,7 +96,16 @@
 
                 {% for task in done_tasks %}
                 <article class="task-card">
-                    <h3>{{ task.title }}</h3>
+                    <div class="task-card-top">
+                        <h3>{{ task.title }}</h3>
+
+                        <form action="{{ url_for('delete_task', id=task.id) }}" method="post">
+                            <button class="delete-btn" type="submit" onclick="return confirm('Удалить задачу?')">
+                                Удалить
+                            </button>
+                        </form>
+                    </div>
+
                     <p>{{ task.description }}</p>
                 </article>
                 {% endfor %}

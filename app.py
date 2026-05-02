@@ -60,6 +60,12 @@ def index():
         done_tasks=done_tasks
     )
 
+@app.route("/tasks/<int:id>/delete", methods=["POST"])
+def delete_task(id):
+    db = get_db()
+    db.execute("DELETE FROM tasks WHERE id = ?", (id,))
+    db.commit()
+    return redirect(url_for("index"))
 
 @app.route("/add", methods=["POST"])
 def add_task():
