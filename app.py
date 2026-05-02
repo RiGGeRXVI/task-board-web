@@ -1,6 +1,6 @@
 import sqlite3
 import click
-from flask import Flask, render_template, request, redirect, url_for, g
+from flask import Flask, render_template, request, redirect, url_for, g, abort
 
 app = Flask(__name__)
 app.config["DATABASE"] = "database.db"
@@ -33,6 +33,17 @@ def init_db_command():
     init_db()
     click.echo("Database initialized.")
 
+def get_task(task_id):
+    db = get_db()
+    task = db.execute(
+        "SELECT * FROM tasks WHERE id = ?",
+        (task_id,)
+    ).fetchone()
+
+    if task is None:
+        abort(404)
+
+    return task
 
 @app.route("/")
 def index():
@@ -66,6 +77,30 @@ def delete_task(id):
     db.execute("DELETE FROM tasks WHERE id = ?", (id,))
     db.commit()
     return redirect(url_for("index"))
+
+@app.route("/tasks/<int:id>/edit", methods=["GET", "POST"])
+def edit_task(id):
+    task = get_task(id)
+
+    if request.method == "POST":
+        title = request.form.get("title", "").strip()
+        description = request.form.get("description", "").strip()
+        status = request.form.get("status", "todo")
+
+        if title:
+            db = get_db()
+            db.execute(
+                """
+                UPDATE tasks
+                SET title = ?, description = ?, status = ?
+                WHERE id = ?
+                """,
+                (title, description, status, id)
+            )
+            db.commit()
+            return redirect(url_for("index"))
+
+    return render_template("edit_task.html", task=task)
 
 @app.route("/add", methods=["POST"])
 def add_task():
