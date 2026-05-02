@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, abort
+from flask import Blueprint, render_template, request, redirect, url_for, abort, jsonify
 from .db import get_db
 
 bp = Blueprint("main", __name__)
@@ -92,3 +92,21 @@ def edit_task(id):
             return redirect(url_for("main.index"))
 
     return render_template("edit_task.html", task=task)
+
+
+@bp.route("/tasks/<int:id>/move", methods=["POST"])
+def move_task(id):
+    task = get_task(id)
+    new_status = request.json.get("status")
+
+    if new_status not in ["todo", "in_progress", "done"]:
+        return jsonify({"success": False, "message": "Invalid status"}), 400
+
+    db = get_db()
+    db.execute(
+        "UPDATE tasks SET status = ? WHERE id = ?",
+        (new_status, id)
+    )
+    db.commit()
+
+    return jsonify({"success": True})
